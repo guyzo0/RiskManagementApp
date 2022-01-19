@@ -5,12 +5,7 @@ namespace App\Http\Controllers\Risk;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Port;
-use App\Models\Carte;
-use App\Models\Module;
-use App\Models\Equipement;
-use App\Models\Division;
-use App\Models\Departement;
-use App\Models\Direction;
+use App\Models\RisquePort;
 use Session;
 
 class PortController extends Controller
@@ -27,7 +22,9 @@ class PortController extends Controller
 
     public function getForm()
     {
-        return view('formulaire/formpor');
+        $p = Port::orderBy('created_at', 'desc')->get();
+        return view('formulaire/formpor', ['ports' => Port::all(),
+                            'risquePorts' => RisquePort::all()])->with('port', $p); 
     }
 
     /**
@@ -39,6 +36,7 @@ class PortController extends Controller
     {
         //
     }
+    
 
     /**
      * Store a newly created resource in storage.
@@ -48,52 +46,47 @@ class PortController extends Controller
      */
     public function store(Request $request)
     {
-        if($request->nom_port == null) {
-            Session::flash('error', 'le champ Nom ne doit pas etre vide.');
-            return redirect()->back();
-        }
-        if($request->type_port == null) {
-            Session::flash('error', 'le champ Type ne doit pas etre vide.');
-            return redirect()->back();
-        }
-        if($request->carte == null) {
-            Session::flash('error', 'le champ Carte ne doit pas etre vide.');
-            return redirect()->back();
-        }
-        if($request->module == null) {
-            Session::flash('error', 'le champ Module ne doit pas etre vide.');
-            return redirect()->back();
-        }
-        if($request->equipement == null) {
-            Session::flash('error', 'le champ Equipement ne doit pas etre vide.');
-            return redirect()->back();
-        }
-        if($request->division == null) {
-            Session::flash('error', 'le champ Division ne doit pas etre vide.');
-            return redirect()->back();
-        }
-        if($request->departement == null) {
-            Session::flash('error', 'le champ Departement ne doit pas etre vide.');
-            return redirect()->back();
-        }
-        if($request->direction == null) {
-            Session::flash('error', 'le champ Direction ne doit pas etre vide.');
-            return redirect()->back();
-        }
-            $port=new Port;
-        $port->nom_port = $request->nom_port;
-        $port->type_port = $request->type_port;
-        $port->carte = $request->carte;
-        $port->module = $request->module;
-        $port->equipement = $request->equipement;
-        $port->division = $request->division;
-        $port->departement = $request->departement;
-        $port->direction = $request->direction;
-        $port->carte_id = $request->carte_id;
-        $port->save();
-        Session::flash('success', 'Le port a ete ajoute avec succes.');
+       
+            $risquePort=new RisquePort;
+        $risquePort->titre = $request->titre;
+        $risquePort->redacteur = $request->redacteur;
+        $risquePort->participants = $request->participants;
+        $risquePort->valideur = $request->valideur;
+        $risquePort->contexte = $request->contexte;
+        $risquePort->perimetre = $request->perimetre;
+        $risquePort->consequence_metier = $request->consequence_metier;
+        $risquePort->manifestation_origine = $request->manifestation_origine;
+        $risquePort->menace = $request->menace;
+        $risquePort->besoin_securite = $request->besoin_securite;
+        $risquePort->niveau_impact = $request->niveau_impact;
+        $risquePort->type_menace = $request->type_menace;
+        $risquePort->potentialite_intrinseque = $request->potentialite_intrinseque;
+        $risquePort->justification_potentialite_intrinseque = $request->justification_potentialite_intrinseque;
+        $risquePort->setGravite_intrinseque();
+        $risquePort->setLabel_gravite_intrinseque();
+        $risquePort->mesures_confinement = $request->mesures_confinement;
+        $risquePort->efficacite_mesures_confininement = $request->efficacite_mesures_confininement;
+        $risquePort->mesures_palliation = $request->mesures_palliation;
+        $risquePort->efficacite_mesures_palliation = $request->efficacite_mesures_palliation;
+        $risquePort->impact_actuel = $request->impact_actuel;
+        $risquePort->setImpact_residuel();
+        $risquePort->mesures_dissuation = $request->mesures_dissuation;
+        $risquePort->efficacite_mesures_dissuation = $request->efficacite_mesures_dissuation;
+        $risquePort->mesures_prevention = $request->mesures_prevention;
+        $risquePort->efficacite_mesures_prevention = $request->efficacite_mesures_prevention;
+        $risquePort->potentialite_actuel = $request->potentialite_actuel;
+        $risquePort->setPotentialite_residuel();
+        $risquePort->setNiveau_gravite();
+        $risquePort->setLabel_gravite();
+        $risquePort->preconisations1 = $request->preconisations1;
+        $risquePort->efficacite_preconisations1 = $request->efficacite_preconisations1;
+        $risquePort->preconisation2 = $request->preconisation2;
+        $risquePort->efficacite_preconisation2 = $request->efficacite_preconisation2;
+        $risquePort->port_id = $request->port_id;
+        $risquePort->save();
+        Session::flash('success', 'Le risque sur le Port a ete ajoute avec succes.');
 
-        return redirect( route('port'));
+        return redirect( route('porVerify'));
     }
 
     /**
@@ -102,6 +95,13 @@ class PortController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function list()
+    {
+        
+        return view('validation.port.port')->with('risquePorts', RisquePort::all());
+    }
+
+
     public function show($id)
     {
         $port = Port::where('id', $id)->first();
@@ -116,7 +116,9 @@ class PortController extends Controller
      */
     public function edit($id)
     {
-        //
+        
+        $risquePort = RisquePort::where('id', $id)->first();
+        return view('validation.port.port_edit', ['risquePort' => $risquePort, 'ports' => Port::all()]);
     }
 
     /**
@@ -128,7 +130,48 @@ class PortController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+            $risquePort = RisquePort::find($id);
+        $risquePort->titre = $request->titre;
+        $risquePort->redacteur = $request->redacteur;
+        $risquePort->participants = $request->participants;
+        $risquePort->valideur = $request->valideur;
+        $risquePort->contexte = $request->contexte;
+        $risquePort->perimetre = $request->perimetre;
+        $risquePort->consequence_metier = $request->consequence_metier;
+        $risquePort->manifestation_origine = $request->manifestation_origine;
+        $risquePort->menace = $request->menace;
+        $risquePort->besoin_securite = $request->besoin_securite;
+        $risquePort->niveau_impact = $request->niveau_impact;
+        $risquePort->type_menace = $request->type_menace;
+        $risquePort->potentialite_intrinseque = $request->potentialite_intrinseque;
+        $risquePort->justification_potentialite_intrinseque = $request->justification_potentialite_intrinseque;
+        $risquePort->setGravite_intrinseque();
+        $risquePort->setLabel_gravite_intrinseque();
+        $risquePort->mesures_confinement = $request->mesures_confinement;
+        $risquePort->efficacite_mesures_confininement = $request->efficacite_mesures_confininement;
+        $risquePort->mesures_palliation = $request->mesures_palliation;
+        $risquePort->efficacite_mesures_palliation = $request->efficacite_mesures_palliation;
+        $risquePort->impact_actuel = $request->impact_actuel;
+        $risquePort->setImpact_residuel();
+        $risquePort->mesures_dissuation = $request->mesures_dissuation;
+        $risquePort->efficacite_mesures_dissuation = $request->efficacite_mesures_dissuation;
+        $risquePort->mesures_prevention = $request->mesures_prevention;
+        $risquePort->efficacite_mesures_prevention = $request->efficacite_mesures_prevention;
+        $risquePort->potentialite_actuel = $request->potentialite_actuel;
+        $risquePort->setPotentialite_residuel();
+        $risquePort->setNiveau_gravite();
+        $risquePort->setLabel_gravite();
+        $risquePort->preconisations1 = $request->preconisations1;
+        $risquePort->efficacite_preconisations1 = $request->efficacite_preconisations1;
+        $risquePort->preconisation2 = $request->preconisation2;
+        $risquePort->efficacite_preconisation2 = $request->efficacite_preconisation2;
+        $risquePort->validation = 1;
+        $risquePort->port_id = $request->port_id;
+        $risquePort->update();
+        Session::flash('success', 'L\'analyse du port a ete validee avec succes.');
+
+        return redirect( route('risque_port'));
+        
     }
 
     /**
@@ -139,6 +182,43 @@ class PortController extends Controller
      */
     public function destroy($id)
     {
-        //
+        RisquePort::find($id)->delete();
+        Session::flash('refus', 'cette analyse a ete annulee veillez contacter l\'analyste pour une nouvelle analyse.');
+
+        return redirect( route('risque_port'));
     }
+
+    public function riskList()
+    { 
+        return view('validation.port.port_list')->with('risquePorts', RisquePort::all());
+    }
+
+
+    public function etat($id)
+    {
+        $risquePort = RisquePort::where('id', $id)->first();
+        return view('validation.port.port_etat', ['risquePort' => $risquePort]);
+    }
+
+
+    public function global_form()
+    {
+        
+        return view('global.form.port.por')->with('ports', Port::all());
+    }
+
+    public function verify()
+    {
+        $risquePort = RisquePort::where('validation', 0)->latest('created_at')->get()->first();
+        return view('global.form.port.por_verify', ['risquePort' => $risquePort]);
+    }
+    public function delete()
+    {
+        risquePort::where('validation', 0)->latest('created_at')->delete();
+        Session::flash('refus', 'cette analyse a ete annulee veillez reprendre!');
+
+        return redirect( route('formpor'));
+    }
+    
+
 }

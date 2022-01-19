@@ -21,4 +21,5 @@ class Carte extends Model
     {
         return $this->hasMany('App/Models/RisqueCarte');
     }
+
 }

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.analog')
 
 @section('content')
 <div class="container">
@@ -62,6 +62,9 @@
                                         {{ __('Forgot Your Password?') }}
                                     </a>
                                 @endif
+                                <a class="btn btn-link" href="{{ route('register') }}">
+                                     {{ __('Create an account') }}
+                                </a>
                             </div>
                         </div>
                     </form>

@@ -38,17 +38,12 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest:expert')->except('logout');
+        $this->middleware('guest:expert')->except('logout.expert');    
     }
 
     public function showLoginExpert() 
     {
          return view('expert.login');
-    }
-
-    public function guard()
-    {
-        return Auth::guard('expert');
     }
 
     public function login(Request $request)
@@ -83,7 +78,14 @@ class LoginController extends Controller
 
         $request->session()->invalidate();
         
-        return $this->loggedOut($request) ?: redirect('/expert');
+        return $this->loggedOut($request) ?: redirect('expert.login');
+    }
+
+    
+
+    public function guard()
+    {
+        return Auth::guard('expert');
     }
 
 }

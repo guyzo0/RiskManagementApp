@@ -1,14 +1,9 @@
-@extends('layouts.app')
+@extends('layouts.da.form')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8 col-md offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading"><center>Ajouter une activite</center>
-                </div>
-
-                <div class="panel-body">
+<div class="container-contact100">
+		<div class="wrap-contact100"> 
+        <span class="contact100-form-title">Ajouter une activite</span>
                     <form action="{{ route('activite.store')}}" method="post">
                     @csrf
                         <div class="form-group">
@@ -53,8 +48,6 @@
                         </center>
                         </div>
                     </form>
-                </div>
-            </div>
             <div class="col-md-2">
             @if(Session::has('error'))
                 <div class="alert alert-danger alert-dismissible" role="alert">
@@ -65,13 +58,12 @@
             @endif
             @if(Session::has('success'))
             <div class="alert alert-success alert-dismissible" role="alert">
-                    <button type="button" class="close" data dismiss="alert" aria-label="close"><span aria-hidden="true">&times;</span>
+                    <button type="button" class="close" data dismiss="alert" aria-label="close"><span aria-hidden="true">x</span>
                     </button>
                         <strong> Succes! </strong> {{Session::get('success')}}
             </div>
             @endif
         </div>
         </div>
-    </div>  
-</div>
+        </div>
 @endsection

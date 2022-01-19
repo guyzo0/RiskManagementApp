@@ -13,6 +13,7 @@ class CreatePortsTable extends Migration
      */
     public function up()
     {
+        Schema::enableForeignKeyConstraints();
         Schema::create('ports', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('type_port');

@@ -13,6 +13,7 @@ class CreateProcessusesTable extends Migration
      */
     public function up()
     {
+        Schema::enableForeignKeyConstraints();
         Schema::create('processuses', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nom_processus');

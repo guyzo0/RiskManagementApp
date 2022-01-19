@@ -8,6 +8,8 @@ use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
+use Auth;
 
 class RegisterController extends Controller
 {
@@ -47,27 +49,43 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(array $data)
+    
+
+
+        public function register(Request $request)
     {
-        return Validator::make($data, [
+        //validate form data
+        $this->validate($request,
+        [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'pseudo' => ['required', 'string', 'min:6', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
-    }
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return \App\User
-     */
-    protected function create(array $data)
-    {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+        //create  user
+        try {
+            $z=$request->pseudo;
+            if($z!= 'GDVFRPOK' && $z!='XXHGREKO' && $z!='WMGDAUKP' && $z!='STREHNBL' && $z!='SXPLOIPD' && $z!='WWXXJASI'
+                && $z!='DZZHREUO' && $z!='OUYTRPOJ' && $z!='GFDRYUKK' && $z!='FDHYTGHH' && $z!='ARVZFVBN' && $z!='OJHGFTYY')  
+            {
+                return redirect()->back()->withInput($request->only('name', 'email', 'pseudo'))->with('error', 'wrong infos!');
+            }
+
+            $user = User::create([
+                'name' => $request -> name,
+                'email' => $request -> email,
+                'pseudo' => $request -> pseudo,
+                'password' => Hash::make($request->password),
+                
+            ]);
+
+            //log the expert in
+            Auth::guard('web')->loginUsingId($user->id);
+            return redirect()->route('home');
+        } catch (\exception $e){
+            return redirect()->back()->withInput($request->only('name', 'email', 'pseudo'));
+        }
     }
+    
 }

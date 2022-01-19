@@ -20,13 +20,13 @@ class ExpertController extends Controller
 
     public function index()
     {
-        return view('expert/home');
+        return view('expert.home');
     }
 
     public function logout()
     {
         Sentinel::logout();
-        return redirect('expert/login');
+        return redirect('expert.login');
     }
 
 

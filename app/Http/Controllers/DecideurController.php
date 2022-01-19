@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Foundation\Validation\ValidatesRequests;
+
 use App\Decideur;
 
 class Decideurcontroller extends Controller
@@ -21,13 +21,13 @@ class Decideurcontroller extends Controller
 
     public function index()
     {
-        return view('decideur/home');
+        return view('decideur.home');
     }
 
     public function logout()
     {
         Sentinel::logout();
-        return redirect('decideur/login');
+        return redirect('decideur.login');
     }
 
     /**

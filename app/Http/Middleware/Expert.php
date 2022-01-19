@@ -3,10 +3,14 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Http\RedirectResponse;
+use Auth;
+use App\User;
 
 class Expert
 {
+    protected $exceptRoutes = [
+        'expert'
+    ];
     /**
      * Handle an incoming request.
      *
@@ -16,12 +20,11 @@ class Expert
      */
     public function handle($request, Closure $next)
     {
-        $expert = $request->expert();
- 
-        if ($expert && $expert->isExpert())
-        {
+        $user = $request->user();
+        if ($user && $user->role === 'expert') {
             return $next($request);
         }
-        return new RedirectResponse(url('expert/login'));
+        
+        return redirect( route('expert.login'));
     }
 }

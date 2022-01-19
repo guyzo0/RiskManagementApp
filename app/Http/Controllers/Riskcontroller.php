@@ -19,7 +19,12 @@ class Riskcontroller extends Controller
 	public function postForm(Request $request)
 	{
 		return 'Le nom est ' . $request->input('nom'); 
-	}
+    }
+    
+    public function index()
+    {
+        return view('validation.empty');
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -30,6 +35,11 @@ class Riskcontroller extends Controller
     {
         //
     }
+
+    public function code()
+{
+    return view('decideur.code');
+}
 
     /**
      * Store a newly created resource in storage.

@@ -1,14 +1,9 @@
-@extends('layouts.app')
+@extends('layouts.da.form')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8 col-md offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading"><center>Ajouter une carte</center>
-                </div>
-
-                <div class="panel-body">
+<div class="container-contact100">
+		<div class="wrap-contact100"> 
+        <span class="contact100-form-title">Ajouter une carte</span>
                     <form action="{{ route('carte.store')}}" method="post">
                     @csrf
                         <div class="form-group">
@@ -69,8 +64,6 @@
                         </center>
                         </div>
                     </form>
-                </div>
-            </div>
             <div class="col-md-2">
             @if(Session::has('error'))
                 <div class="alert alert-danger alert-dismissible" role="alert">
@@ -88,6 +81,5 @@
             @endif
         </div>
         </div>
-    </div>  
-</div>
+    </div>
 @endsection

@@ -19,8 +19,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ModuleSeeder::class);
         $this->call(CarteSeeder::class);
         $this->call(PortSeeder::class);
-        $this->call(RisqueDirectionSeeder::class);
-        $this->call(RisqueDepartementSeeder::class);
     }
 
 }

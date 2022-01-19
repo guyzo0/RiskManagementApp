@@ -1,14 +1,9 @@
-@extends('layouts.app')
+@extends('layouts.da.form')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8 col-md offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading"><center>Affichage de l'activite {{ $activite->id}}</center>
-                </div>
-
-                <div class="panel-body">
+<div class="container-contact100">
+		<div class="wrap-contact100"> 
+        <span class="contact100-form-title">Affichage de l'activite {{ $activite->id}}</span>
                     <form action="" method="post">
                         <div class="form-group">
                             <label for="id"> ID de l'activite </label>
@@ -50,7 +45,4 @@
                     </form>
                 </div>
             </div>
-        </div>
-    </div>  
-</div>
 @endsection

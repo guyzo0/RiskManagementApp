@@ -1,22 +1,21 @@
-@extends('layouts.app')
+@extends('layouts.da.danal2')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8 col-md offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <center> <span>Analyser ou connaitre l'etat du risque sur chaque port</span> </center>
-                </div>
-
-                <div class="panel-body">
-                    <table class="table table-bordered table-stripped">
+<section class="ftco-section">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-6 text-center mb-5">
+					<h2 class="heading-section">Connaitre les caracteristiques d'un port</h2>
+                    </div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="table-wrap">
+						<table class="table table-bordered table-dark table-hover">
                         <thead>
                             <th>Index</th>
                             <th>Nom</th>
                             <th>Details</th>
-                            <th>Etat</th>
-                            <th>Analyser</th>
                         </thead>
 
                         <tbody>
@@ -28,22 +27,10 @@
                                     <th>
                                         <a href="{{ route('por.show', ['id'=>$port->id])}}" class="btn btn-sm btn-primary">Details</a>
                                     </th>
-                                    <th>
-                                        <a href="" class="btn btn-sm btn-warning">Etat</a>
-                                    </th>
-                                    <th>
-                                        <a href="{{ route('formpor')}}" class="btn btn-sm btn-success">Analyser</a>
-                                    </th>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
-                    <div class="form-group">
-                      
-                            <a href="" class="btn btn-warning pull-right btn-lg">Etat general des ports</a>
-                      
-                            <a href="{{ route('formpor')}}" class="btn btn-success pull-left btn-lg">Analyse general des ports</a>
-                        </div>
                 </div>
             </div>
         </div>
@@ -57,5 +44,5 @@
             @endif
         </div>
     </div>
-</div>
+</disectionv>
     @endsection

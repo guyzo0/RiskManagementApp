@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\RisquePort;
 use App\Models\Port;
 use App\Models\Carte;
 use App\Models\Module;
@@ -134,7 +135,7 @@ class PortController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request  $reques
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -201,4 +202,32 @@ class PortController extends Controller
 
         return redirect( route('port'));
     }
+
+
+    public function niveau_graviteGeneral()
+{   
+    $risquePort = RisquePort::all();
+    $general_port=0;
+    $d = $risquePort->id;
+    $ld = last($d);
+    do
+    {
+        $t = $risquePort->titre;
+        for ($d=1; $d<=$ld; $d++)
+        {
+            if ($risquePort->titre===$t && $risquePort->validation===1)
+            {
+                $general_port = $general_port+0;
+            }
+            else
+            {
+                $general_port = $general_port + $risquePort->niveau_gravite;
+            }
+        }
+            
+    } 
+    while($t != NULL );
+    
+     return view('global.form.port.general_port')->with('general_port', $general_port);
+}
 }

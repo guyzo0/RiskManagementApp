@@ -16,4 +16,5 @@ class Port extends Model
     {
         return $this->hasMany('App/Models/RisquePort');
     }
+
 }

@@ -40,7 +40,8 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest:decideur')->except('logout');
+        $this->middleware('guest:decideur')->except('logout.decideur');
+      
     }
 
     public function showLoginForm() 
@@ -70,14 +71,11 @@ class LoginController extends Controller
 
     //if unsuccessful then redirect back to login page with email and remember fields
     
-        return redirect()->back()->withInput($request->only('email', 'remember'))->with('info', 'Could not sign in with those details');
+        return redirect()->back()->withInput($request->only('email', 'remember'))->with('merror', 'Could not sign in with those details');
+        
         
         }
         
-    protected function guard()
-    {
-        return Auth::guard('decideur');
-    }
 
     public function logout(Request $request)
     {
@@ -85,7 +83,15 @@ class LoginController extends Controller
 
         $request->session()->invalidate();
         
-        return $this->loggedOut($request) ?: redirect('/decideur');
+        return $this->loggedOut($request) ?: redirect('decideur.login');
     }
-}
 
+    
+
+    protected function guard()
+    {
+        return Auth::guard('decideur');
+    }
+
+
+}

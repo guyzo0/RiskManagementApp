@@ -1,32 +1,37 @@
-@extends('layouts.app')
+@extends('layouts.da.form')
 
 @section('content')
-    <div class = "content">
-        <div class = "row justify-content-center">
-            <div class = "col-md-8 col-md-offset-2">
-                <div class = "panel panel-default"> 
-                    <div class = "panel-heading">
-                        <center><h1>Formulaire d'analyse du Risque</h1></center>
-                    </div>
-
-                    <div class = "panel-body">   
-                        <form action = "" method = "post">
+<div class="container-contact100">
+		<div class="wrap-contact100">  
+                        <form action = "{{ route('RisqueDepartement.store')}}" method = "post">
                     @csrf
-                        <fieldset>
+                    <span class="contact100-form-title">Formulaire d'analyse du Risque sur un departement</span>
+                    <fieldset>
+                    <p class = "analyse">
+                                <center><h3> Localisation</h3></center>
+                                        <div class = "form-group">
+                                            <label for = "departement_id">Departement, Direction</label>
+                                            <select name="departement_id" id="departement" class="form-control">
+                                                @foreach($departements as $departement)
+                                                    <option value="{{ $departement->id }}">{{$departement->id}}-{{$departement->nom_departement}}, {{$departement->direction}} </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                </p>
                                     <p>
 
                                             <legend><center><h3> Presentation </h3></center></legend>
                                         <div class = "form-group">
                                             <label for = "titre">Titre</label>
-                                            <input type = "text" name = "titre" id = "titre" class = "form-control" required >
-                                        </div>
-                                        <div class = "form-group">
-                                            <label for = "date_creation">Date de creation:</label>
-                                            <input type = "date" name = "d" id = "date_creation" class = "form-control" required >
+                                            <select name="titre" id="titre" class="form-control">
+                                                @foreach($departements as $departement)
+                                                    <option value="{{ $departement->nom_departement }}">{{$departement->id}}-{{$departement->nom_departement}} </option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                         <div class = "form-group">
                                             <label for = "redacteur">Redacteur</label>
-                                            <input type = "text" name = "redacteur" id = "redacteurs" class = "form-control" required >
+                                            <input type = "text" name = "redacteur" id = "redacteur" class = "form-control" required >
                                         </div>
                                         <div class = "form-group">
                                             <label for = "participants">Participants</label>
@@ -54,8 +59,8 @@
                                             <textarea name = "consequence_metier" id = "consequence_metier" class = "form-control" required ></textarea>
                                         </div>
                                         <div class = "form-group">
-                                            <label for = "Manifestation_origine">Manifestation a l'origine du dysfonctionnement:</label>
-                                            <textarea name = "Manifestation_origine" id = "Manifestation_origine" class = "form-control"required ></textarea>
+                                            <label for = "manifestation_origine">Manifestation a l'origine du dysfonctionnement:</label>
+                                            <textarea name = "manifestation_origine" id = "manifestation_origine" class = "form-control"required ></textarea>
                                         </div>
                                         <div class = "form-group">
                                             <label for = "menace">Menace</label>
@@ -76,7 +81,7 @@
                                             </select>
                                         </div>
                                         <div class = "form-group">
-                                            <label for = "niveau_impact">Niveau d'impact</label>
+                                            <label for = "niveau_impact">Impact intrinseque</label>
                                             <select name = "niveau_impact" id = "niveau_impact" class = "form-control" required>
                                                 <option value = "1"> 1 </option>
                                                 <option value = "2"> 2 </option>
@@ -103,7 +108,7 @@
                                         </div>
                                         <div class = "form-group">
                                             <label for = "justification_potentialite_intrinseque">Justification_potentialite_intrinseque</label>
-                                            <textarea name = "Justification_potentialite_intrinseque" id = "Justification_potentialite_intrinseque" class = "form-control" required ></textarea>
+                                            <textarea name = "justification_potentialite_intrinseque" id = "justification_potentialite_intrinseque" class = "form-control" required ></textarea>
                                         </div>
                                     </div>
                                 </p>
@@ -138,7 +143,13 @@
                                         </div>
                                         <div class = "form-group">
                                             <label for = "impact_actuel">Impact actuel </label>
-                                            <input type = "decimal" name = "impact_actuel" id = "impact_actuel" class = "form-control" required >
+                                            <select name = "impact_actuel" id = "impact_actuel" class = "form-control" required>
+                                                <option value = "1"> 1 </option>
+                                                <option value = "2"> 2 </option>
+                                                <option value = "3"> 3 </option>
+                                                <option value = "4"> 4 </option>
+                                            </select>
+
                                         </div>
                                     </div>
                                 </p>
@@ -173,7 +184,12 @@
                                         </div>
                                         <div class = "form-group">
                                             <label for = "potentialite_actuel">Potentialite actuelle </label>
-                                            <input type = "decimal" name = "potentialite_actuel" id = "potentialite_actuel" class = "form-control" required>
+                                            <select name = "potentialite_actuel" id = "potentialite_actuel" class = "form-control" required>
+                                                <option value = "1"> 1 </option>
+                                                <option value = "2"> 2 </option>
+                                                <option value = "3"> 3 </option>
+                                                <option value = "4"> 4 </option>
+                                            </select>
                                         </div>
                                     </div>
                                 </p>
@@ -208,20 +224,11 @@
                                         </div>
                                     </div>
                                 </p>
-                                <p class = "analyse">
-                                <center><h3> Localisation</h3></center>
-                                        <div class = "form-group">
-                                            <label for = "departement">Departement</label>
-                                            <input type = "text" name = "departement" id = "departement" class = "form-control" required>
-                                </p>
                                  <div class = "form-group">
-                                    <center><button type = "submit" class = "btn btn-success btn-lg">enregistrer</button></center>
+                                    <center><button type = "submit" class = "btn btn-success btn-lg">verifier</button></center>
                                 </div>
                         </form>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
 @endsection
                                 

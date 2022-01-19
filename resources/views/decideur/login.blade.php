@@ -1,15 +1,22 @@
-@extends('layouts.app')
+@extends('layouts.decideur')
 
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
+        
+        @if($errors->any())
+            @foreach($errors->all() as $error)
+                <strong>{{ $error }}</strong>
+            @endforeach
+        @endif
             <div class="card">
                 <div class="card-header">{{ __('Login as Manager') }}</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('decideur.login') }}">
                         @csrf
+
 
                         <div class="form-group row">
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>

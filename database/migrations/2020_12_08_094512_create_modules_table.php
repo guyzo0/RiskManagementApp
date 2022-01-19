@@ -13,6 +13,7 @@ class CreateModulesTable extends Migration
      */
     public function up()
     {
+        Schema::enableForeignKeyConstraints();
         Schema::create('modules', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nom_module');

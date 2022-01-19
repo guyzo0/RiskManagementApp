@@ -1,17 +1,19 @@
-@extends('layouts.app')
+@extends('layouts.da.danal2')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8 col-md offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <center> <span>Liste des processus disponibles</span> </center>
+<section class="ftco-section">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-6 text-center mb-5">
+					<h2 class="heading-section">Liste des processus disponibles</h2>
+                    </div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="table-wrap">
+						<table class="table table-bordered table-dark table-hover">
                     <a href="{{ route('processus.add')}}" class="btn btn-xs pull-right btn-success"> ajouter un processus </a>
-                </div>
 
-                <div class="panel-body">
-                    <table class="table table-bordered table-stripped">
                         <thead>
                             <th>Index</th>
                             <th>Nom</th>
@@ -54,5 +56,5 @@
             @endif
         </div>
     </div>
-</div>
+</section>
     @endsection

@@ -1,4 +1,4 @@
-@extends('layouts.add')
+@extends('layouts.explog')
 
 @section('content')
 <div class="container">
@@ -57,11 +57,12 @@
                                     {{ __('Login') }}
                                 </button>
 
-                                @if (Route::has('expert.password.request'))
-                                    <a class="btn btn-link" href="">
+                                <a class="btn btn-link" href="">
                                         {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
+                                </a>
+                                <a class="btn btn-link" href="{{ route('expert.register')}}">
+                                    {{ __('Create an account') }}
+                                </a>
                             </div>
                         </div>
                     </form>

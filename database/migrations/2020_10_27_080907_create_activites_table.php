@@ -13,6 +13,7 @@ class CreateActivitesTable extends Migration
      */
     public function up()
     {
+        Schema::enableForeignKeyConstraints();
         Schema::create('activites', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nom_activite');

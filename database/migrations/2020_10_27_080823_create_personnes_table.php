@@ -13,6 +13,7 @@ class CreatePersonnesTable extends Migration
      */
     public function up()
     {
+        Schema::enableForeignKeyConstraints();
         Schema::create('personnes', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nom_personne');

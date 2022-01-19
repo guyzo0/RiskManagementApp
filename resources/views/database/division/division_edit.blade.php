@@ -1,14 +1,9 @@
-@extends('layouts.app')
+@extends('layouts.da.form')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8 col-md offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading"><center>modification de la division {{ $division->id}} </center>
-                </div>
-
-                <div class="panel-body">
+<div class="container-contact100">
+		<div class="wrap-contact100"> 
+        <span class="contact100-form-title">modification de la division {{ $division->id}}</span>
                     <form action="{{ route('division.update', ['id'=>$division->id])}}" method="post">
                     @csrf
                         <div class="form-group">
@@ -41,9 +36,6 @@
                         </center>
                         </div>
                     </form>
-                </div>
-            </div>
-        </div>
         <div class="col-md-2">
             @if(Session::has('error'))
                 <div class="alert alert-danger alert-dismissible" role="alert">

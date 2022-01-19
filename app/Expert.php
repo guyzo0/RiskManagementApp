@@ -18,7 +18,7 @@ class Expert extends Authenticatable
     protected $guard = 'expert';
 
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'pseudo', 'password',
     ];
 
     /**

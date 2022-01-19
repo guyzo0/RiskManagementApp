@@ -47,16 +47,25 @@ class RegisterController extends Controller
         [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:experts'],
+            'pseudo' => ['required', 'string', 'min:6', 'unique:experts'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
 
         //create expert user
         try {
+            $z=$request->pseudo;
+            if($z!= 'NTRFDR' && $z!='GRDAHY' && $z!='HGCZTU' && $z!='TFCVGY' && $z!='PLKJHU' && $z!='TDFGE'
+                && $z!='SMSYTD' && $z!='PLATYH' && $z!='KKEDFG' && $z!='CZXNFL' && $z!='IIJAUK' && $z!='TYFDEE')  
+            {
+                return redirect()->back()->withInput($request->only('name', 'email', 'pseudo'))->with('error', 'wrong infos!');
+            }
 
             $expert = Expert::create([
                 'name' => $request -> name,
                 'email' => $request -> email,
+                'pseudo' => $request -> pseudo,
                 'password' => Hash::make($request->password),
+                
             ]);
 
             //log the expert in

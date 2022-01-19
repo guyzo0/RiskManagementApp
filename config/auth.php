@@ -52,21 +52,9 @@ return [
             'provider' => 'decideurs',
         ],
 
-        'decideur-api' => [
-            'driver' => 'token',
-            'provider' => 'decideurs',
-            'hash' => false,
-        ],
-
         'expert' => [
             'driver' => 'session',
             'provider' => 'experts',
-        ],
-
-        'expert-api' => [
-            'driver' => 'token',
-            'provider' => 'experts',
-            'hash' => false,
         ],
     ],
 
